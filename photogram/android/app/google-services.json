@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "597991022185",
+    "firebase_url": "https://fluttershare-9af16.firebaseio.com",
+    "project_id": "fluttershare-9af16",
+    "storage_bucket": "fluttershare-9af16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597991022185:android:e6766c1bda7101c79b4cf8",
+        "android_client_info": {
+          "package_name": "dev.josemarjobs.photogram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597991022185-mcol423kfg3lteien8dnkhia93idgnes.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.josemarjobs.photogram",
+            "certificate_hash": "15bbfc0b33fd3b5135315c3181d06d55ff549745"
+          }
+        },
+        {
+          "client_id": "597991022185-13ojq964cf8vgibijiop8pgpafbc2ncg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEpexYDrp6cTk2wGK1wyeNO11eDrptyMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597991022185-13ojq964cf8vgibijiop8pgpafbc2ncg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "597991022185-p7bci1pgrfdjtm0s03ukmv4vb1mjmm58.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.josemarjobs.photogram"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
