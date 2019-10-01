@@ -7,7 +7,6 @@ import 'package:photogram/pages/activity_feed.dart';
 import 'package:photogram/pages/create_account.dart';
 import 'package:photogram/pages/profile.dart';
 import 'package:photogram/pages/search.dart';
-import 'package:photogram/pages/timeline.dart';
 import 'package:photogram/pages/upload.dart';
 
 final GoogleSignIn googleSignin = GoogleSignIn();
