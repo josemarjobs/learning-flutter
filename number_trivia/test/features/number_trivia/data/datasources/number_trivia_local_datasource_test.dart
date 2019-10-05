@@ -1,19 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 import 'package:number_trivia/core/error/exceptions.dart';
 import 'package:number_trivia/features/number_trivia/data/datasources/number_trivia_local_datasource.dart';
 import 'package:number_trivia/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:matcher/matcher.dart';
 
-import '../../fixtures/fixture_reader.dart';
+import '../../../../fixtures/fixture_reader.dart';
+
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
-  NumberTriviaLocalDatasourceImpl datasource;
+  NumberTriviaLocalDatasource datasource;
   MockSharedPreferences sharedPreferences;
 
   setUp(() {
@@ -51,7 +52,7 @@ void main() {
   group('cacheNumberTrivia', () {
     test('should save the number trivia to sharedPreferences', () async {
       final numberTrivia = NumberTriviaModel(number: 1, text: 'test trivia');
-      
+
       datasource.cacheNumberTrivia(numberTrivia);
 
       final expectedJson = json.encode(numberTrivia.toJson());

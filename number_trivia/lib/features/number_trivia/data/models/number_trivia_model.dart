@@ -2,6 +2,9 @@ import 'package:meta/meta.dart';
 import 'package:number_trivia/features/number_trivia/domain/entities/number_trivia.dart';
 
 class NumberTriviaModel extends NumberTrivia {
+   @override
+  List<Object> get props => [text, number];
+  
   NumberTriviaModel({
     @required String text,
     @required int number,
@@ -20,4 +23,5 @@ class NumberTriviaModel extends NumberTrivia {
       "number": number,
     };
   }
+
 }
