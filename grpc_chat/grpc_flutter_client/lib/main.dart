@@ -21,8 +21,26 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Scaffold(
+      appBar: AppBar(title: Text("Choose a username")),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: <Widget>[
+              TextField(controller: controller),
+              MaterialButton(
+                child: Text('Submit'),
+                onPressed: () {},
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
