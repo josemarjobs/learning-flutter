@@ -52,6 +52,9 @@ func connect(user *proto.User) error {
 }
 
 func main() {
+	serverAddr := flag.String("server", "localhost:8080", "the server address")
+	flag.Parse()
+
 	timestamp := time.Now()
 	// done := make(chan struct{})
 
@@ -59,10 +62,11 @@ func main() {
 	flag.Parse()
 	id := sha256.Sum256([]byte(timestamp.String() + *name))
 
-	conn, err := grpc.Dial("localhost:8080", grpc.WithInsecure())
+	conn, err := grpc.Dial(*serverAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("couldn't connect to server: %v\n", err)
 	}
+	log.Printf("Connected to %v\n", *serverAddr)
 
 	client = proto.NewBroadcastClient(conn)
 	user := proto.User{
