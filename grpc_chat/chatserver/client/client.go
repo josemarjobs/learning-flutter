@@ -31,7 +31,7 @@ func connect(user *proto.User) error {
 		Active: true,
 	})
 	if err != nil {
-		return fmt.Errorf("connection failed %v\n", err)
+		return fmt.Errorf("connection failed %v", err)
 	}
 
 	wg.Add(1)
