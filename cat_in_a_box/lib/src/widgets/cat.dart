@@ -5,7 +5,7 @@ class Cat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       'https://i.imgur.com/QwhZRyL.png',
-      width: 300.0,
+      // width: 200.0,
     );
   }
 

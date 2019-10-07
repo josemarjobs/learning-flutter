@@ -1,6 +1,5 @@
 import 'package:cat_in_a_box/src/widgets/cat.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/scheduler/ticker.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -43,10 +42,12 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
       ),
       body: GestureDetector(
         child: Center(
-          child: Stack(children: [
-            buildBox(),
-            buildCatAnimation(),
-          ]),
+          child: Stack(
+            children: [
+              buildBox(),
+              buildCatAnimation(),
+            ],
+          ),
         ),
         onTap: onTap,
       ),
@@ -57,9 +58,11 @@ class HomeState extends State<Home> with TickerProviderStateMixin {
     return AnimatedBuilder(
       animation: catAnimation,
       builder: (context, child) {
-        return Container(
+        return Positioned(
           child: child,
-          margin: EdgeInsets.only(top: catAnimation.value),
+          bottom: catAnimation.value,
+          right: 0.0,
+          left: 0.0,
         );
       },
       child: Cat(),
