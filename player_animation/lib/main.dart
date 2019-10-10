@@ -30,11 +30,14 @@ class StackBuilder extends StatefulWidget {
 class _StackBuilderState extends State<StackBuilder>
     with TickerProviderStateMixin {
   AnimationController paneController;
+  AnimationController playPauseController;
   Animation<double> paneAnimation;
   Animation<double> albumImageAnimation;
   Animation<double> albumImageBlurAnimation;
   Animation<Color> songContainerColorAnimation;
   Animation<Color> songContainerTextColorAnimation;
+
+  bool isPlaying = false;
 
   @override
   void initState() {
@@ -44,6 +47,12 @@ class _StackBuilderState extends State<StackBuilder>
       vsync: this,
       duration: Duration(milliseconds: 500),
     );
+
+    playPauseController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+
     paneAnimation = Tween<double>(begin: -320, end: 0).animate(
       CurvedAnimation(parent: paneController, curve: Curves.easeInOut),
     );
@@ -74,6 +83,17 @@ class _StackBuilderState extends State<StackBuilder>
     } else if (paneController.status == AnimationStatus.dismissed) {
       paneController.forward();
     }
+  }
+
+  playSong() {
+    if (isPlaying) {
+      playPauseController.reverse();
+    } else {
+      playPauseController.forward();
+    }
+    setState(() {
+      isPlaying = !isPlaying;
+    });
   }
 
   Widget stackBody(BuildContext context) {
@@ -139,6 +159,34 @@ class _StackBuilderState extends State<StackBuilder>
                       color: songContainerTextColorAnimation.value,
                       fontSize: 12.0,
                     ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Icon(
+                        Icons.skip_previous,
+                        color: songContainerTextColorAnimation.value,
+                        size: 40.0,
+                      ),
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: playSong,
+                          child: AnimatedIcon(
+                            icon: AnimatedIcons.play_pause,
+                            progress: playPauseController,
+                            color: songContainerTextColorAnimation.value,
+                            size: 45.0,
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.skip_next,
+                        color: songContainerTextColorAnimation.value,
+                        size: 40.0,
+                      ),
+                    ],
                   ),
                   SizedBox(height: 8.0),
                   Container(
