@@ -14,7 +14,9 @@ class NumberTriviaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Number Trivia'),
       ),
-      body: buildBody(context),
+      body: SingleChildScrollView(
+        child: buildBody(context),
+      ),
     );
   }
 
@@ -61,73 +63,3 @@ class NumberTriviaPage extends StatelessWidget {
   }
 }
 
-class TriviaControlls extends StatefulWidget {
-  const TriviaControlls({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  _TriviaControllsState createState() => _TriviaControllsState();
-}
-
-class _TriviaControllsState extends State<TriviaControlls> {
-  String inputString;
-  final textController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextField(
-          controller: textController,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Input a number',
-          ),
-          keyboardType: TextInputType.number,
-          onSubmitted: (val) {
-            inputString = val;
-            getConcreteNumberTrivia();
-          },
-          onChanged: (val) {
-            inputString = val;
-          },
-        ),
-        SizedBox(height: 10.0),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: RaisedButton(
-                child: Text('Search'),
-                color: Theme.of(context).accentColor,
-                textTheme: ButtonTextTheme.primary,
-                onPressed: getConcreteNumberTrivia,
-              ),
-            ),
-            SizedBox(width: 10.0),
-            Expanded(
-              child: RaisedButton(
-                child: Text('Get Random Trivia'),
-                onPressed: getRandomNumberTrivia,
-              ),
-            )
-          ],
-        )
-      ],
-    );
-  }
-
-  void getConcreteNumberTrivia() {
-    textController.clear();
-    BlocProvider.of<NumberTriviaBloc>(context).dispatch(
-      GetTriviaForConcreteNumber(inputString),
-    );
-  }
-
-  void getRandomNumberTrivia() {
-    textController.clear();
-    BlocProvider.of<NumberTriviaBloc>(context).dispatch(
-      GetTriviaForRandomNumber(),
-    );
-  }
-}
