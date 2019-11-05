@@ -8,14 +8,12 @@ import 'package:news/src/models/item_model.dart';
 class NewsDbProvider {
   Database db;
 
-  init() async {
+  void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, "items.db");
-    db = await openDatabase(
-      path,
-      version: 1,
-      onCreate: (Database newDb, int version) {
-        newDb.execute("""
+    db = await openDatabase(path, version: 1,
+        onCreate: (Database newDb, int version) {
+      newDb.execute("""
         CREATE TABLE Items
           (
             id INTEGER PRIMARY KEY,
@@ -33,7 +31,26 @@ class NewsDbProvider {
             descendants INTEGER
           );
         """);
-      }
-    );
+    });
   }
+
+  Future<ItemModel> fetchItem(int id) async {
+    final maps = await db.query(
+      "Items",
+      columns: null,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    if (maps.isEmpty) {
+      return null;
+    }
+
+    return ItemModel.fromDb(maps.first);
+  }
+
+  void addItem(ItemModel item) {
+    db.insert("Items", item.toMap());
+  }
+
 }
