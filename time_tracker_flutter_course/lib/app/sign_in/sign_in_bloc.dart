@@ -4,25 +4,29 @@ import 'package:flutter/foundation.dart';
 import 'package:timetrackerfluttercourse/services/auth.dart';
 
 class SignInBloc {
-  SignInBloc({@required this.auth});
+  SignInBloc({
+    @required this.auth,
+    @required this.isLoading,
+  });
 
   final AuthBase auth;
-  final StreamController<bool> _isLoadingController = StreamController<bool>();
+  final ValueNotifier<bool> isLoading;
 
-  Stream<bool> get isLoadingStream => _isLoadingController.stream;
-
-  void dispose() {
-    _isLoadingController.close();
-  }
-
-  void _setIsLoading(bool isLoading) => _isLoadingController.add(isLoading);
+//  final StreamController<bool> _isLoadingController = StreamController<bool>();
+//  Stream<bool> get isLoadingStream => _isLoadingController.stream;
+//  void dispose() {
+//    _isLoadingController.close();
+//  }
+//  void _setIsLoading(bool isLoading) => _isLoadingController.add(isLoading);
 
   Future<User> _signIn(Future<User> Function() singInMethod) async {
     try {
-      _setIsLoading(true);
+//      _setIsLoading(true);
+      isLoading.value = true;
       return await singInMethod();
     } catch (e) {
-      _setIsLoading(false);
+//      _setIsLoading(false);
+      isLoading.value = false;
       rethrow;
     }
   }
