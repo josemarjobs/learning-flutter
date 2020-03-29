@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:timetrackerfluttercourse/app/sign_in/email_sign_in_page.dart';
-import 'package:timetrackerfluttercourse/app/sign_in/sign_in_bloc.dart';
+import 'package:timetrackerfluttercourse/app/sign_in/sign_in_manager.dart';
 import 'package:timetrackerfluttercourse/app/sign_in/sign_in_button.dart';
 import 'package:timetrackerfluttercourse/app/sign_in/social_sign_in_button.dart';
 import 'package:timetrackerfluttercourse/custom_widgets/platform_exception_alert_dialog.dart';
 import 'package:timetrackerfluttercourse/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
-  SignInPage({@required this.bloc, @required this.isLoading});
+  SignInPage({@required this.manager, @required this.isLoading});
 
-  final SignInBloc bloc;
+  final SignInManager manager;
   final bool isLoading;
 
   static Widget create(BuildContext context) {
@@ -19,11 +19,11 @@ class SignInPage extends StatelessWidget {
     return ChangeNotifierProvider<ValueNotifier<bool>>(
       create: (_) => ValueNotifier<bool>(false),
       child: Consumer<ValueNotifier<bool>>(
-        builder: (context, isLoading, widget) => Provider<SignInBloc>(
-          create: (context) => SignInBloc(auth: auth, isLoading: isLoading),
-          child: Consumer<SignInBloc>(
-            builder: (context, bloc, _) => SignInPage(
-              bloc: bloc,
+        builder: (context, isLoading, widget) => Provider<SignInManager>(
+          create: (context) => SignInManager(auth: auth, isLoading: isLoading),
+          child: Consumer<SignInManager>(
+            builder: (context, manager, _) => SignInPage(
+              manager: manager,
               isLoading: isLoading.value,
             ),
           ),
@@ -41,7 +41,7 @@ class SignInPage extends StatelessWidget {
 
   void _signInAnonymously(BuildContext context) async {
     try {
-      await bloc.signInAnonymously();
+      await manager.signInAnonymously();
     } on PlatformException catch (e) {
       _showSignInError(context, e);
       print(e);
@@ -50,7 +50,7 @@ class SignInPage extends StatelessWidget {
 
   void _signInWithGoogle(BuildContext context) async {
     try {
-      var user = await bloc.signInWithGoogle();
+      var user = await manager.signInWithGoogle();
       print('Google User: $user');
     } on PlatformException catch (e) {
       if (e.code != 'ERROR_ABORTED_BY_USER') {
