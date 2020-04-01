@@ -54,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
     );
-    if(isMe) {
+    if (isMe) {
       return containerMessage;
     }
     return Row(
@@ -71,6 +71,39 @@ class _ChatScreenState extends State<ChatScreen> {
           onPressed: () {},
         )
       ],
+    );
+  }
+
+  Widget _buildMessageComposer() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      height: 70.0,
+      color: Colors.white,
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.photo),
+            iconSize: 26.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {},
+          ),
+          Expanded(
+            child: TextField(
+              onChanged: (msg) => print(msg),
+              decoration: InputDecoration.collapsed(
+                hintText: 'Send a message...',
+              ),
+              textCapitalization: TextCapitalization.sentences,
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.send),
+            iconSize: 26.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {},
+          ),
+        ],
+      ),
     );
   }
 
@@ -101,26 +134,30 @@ class _ChatScreenState extends State<ChatScreen> {
           topLeft: Radius.circular(30.0),
           topRight: Radius.circular(30.0),
         ),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: ListView.builder(
-                  reverse: true,
-                  padding: EdgeInsets.only(top: 16.0),
-                  itemCount: messages.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final Message message = messages[index];
-                    final bool isMe = message.sender.id == currentUser.id;
-                    return _buildMessage(message, isMe);
-                  },
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: ListView.builder(
+                    reverse: true,
+                    padding: EdgeInsets.only(top: 16.0),
+                    itemCount: messages.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final Message message = messages[index];
+                      final bool isMe = message.sender.id == currentUser.id;
+                      return _buildMessage(message, isMe);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+              _buildMessageComposer(),
+            ],
+          ),
         ),
       ),
     );
