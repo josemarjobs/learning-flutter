@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:topcoins/blocs/crypto/crypto_bloc.dart';
+import 'package:topcoins/repositories/crypto_repository.dart';
 import 'package:topcoins/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
@@ -6,14 +9,20 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Top Crypto Coins',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.black,
-        accentColor: Colors.tealAccent,
+    return BlocProvider<CryptoBloc>(
+      create: (_) => CryptoBloc(cryptoRepository: CryptoRepository())
+        ..add(
+          AppStarted(),
+        ),
+      child: MaterialApp(
+        title: 'Top Crypto Coins',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Colors.black,
+          accentColor: Colors.tealAccent,
+        ),
+        home: HomeScreen(),
       ),
-      home: HomeScreen(),
     );
   }
 }
